@@ -12,7 +12,8 @@ body {
 }
 #question-box img {
   display: inline-block;
-  width: 40%;
+  width: 50%;
+  height:40%;
 }
 
 #landingpage {

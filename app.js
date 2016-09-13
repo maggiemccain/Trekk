@@ -74,7 +74,7 @@ var filterIndex = 0;
 var filters = [
   {
     keyword: 'city',
-    yes: 'https://newevolutiondesigns.com/images/freebies/city-wallpaper-47.jpg',
+    yes: 'http://media.giphy.com/media/tffaEs6otB1jW/giphy.gif',
     no: 'http://feelgrafix.com/data_images/out/5/779391-countryside.jpg'
   },
   {
