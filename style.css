@@ -1,3 +1,20 @@
+body {
+  box-sizing: border-box;
+}
+
+#wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+#question-box {
+  width: 100%;
+}
+#question-box img {
+  display: inline-block;
+  width: 40%;
+}
+
 #landingpage {
   background-image: url('https://i.ytimg.com/vi/ezQMNn2dDtE/maxresdefault.jpg');
   background-size: cover;
@@ -7,17 +24,7 @@
   height: 100vh;
 }
 
-#firstFilter {
-  background: #1B264F;
-  width: 100%;
-  height: 100vh;
-}
-
-.filterDiv {
-  display: none;
-}
-
 #map {
-  height: 100%;
-  width: 100%;
+  height: 50%;
+  width: 60%;
 }

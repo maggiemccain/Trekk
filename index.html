@@ -8,39 +8,24 @@
   <title>travel app</title>
 </head>
 <body>
+  <div id="wrapper">
+    <div id="landingpage">
+        <h1>Discovery my trip</h1>
+        <button id="readyBtn">I'm Ready</button>
+    </div>
 
-  <div id="landingpage">
-      <h1>Discovery my trip</h1>
-      <button id="readyBtn">I'm Ready</button>
+    <div id="question-box"></div>
+
+
+    <div id="map"></div>
   </div>
-
-  <div id="firstFilter" class="filterDiv">
-    <h1>first filter options</h1>
-    <div class="filterOption"></div>
-    <div class="filterOption"></div>
-  </div>
-
-  <div id="secondFilter" class="filterDiv">
-    <h1>second filter options</h1>
-    <div class="filterOption"></div>
-    <div class="filterOption"></div>
-  </div>
-
-  <div id="thirdFilter" class="filterDiv">
-    <h1>third filter options</h1>
-    <div class="filterOption"></div>
-    <div class="filterOption"></div>
-  </div>
-
-  <div id="map"></div>
-
   <!-- google maps script -->
   <script>
     var map;
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 5
+        center: {lat: 41.577212, lng: -93.711332},
+        zoom: 4
       });
     }
   </script>
