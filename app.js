@@ -15,7 +15,7 @@ var destinations = [{
   long: -82.560352,
   city: false,
   population: 87236,
-  temperature: false,
+  temperature: '',
   vibes: 'scenic, hipster',
   mustsee: 'Blue Ridge Parkway, Biltmore Estate'
 }, {
@@ -24,7 +24,7 @@ var destinations = [{
   long: -97.7430600,
   city: true,
   population: 885400,
-  temperature: true,
+  temperature: '',
   vibes: 'hipster, foodie, music',
   mustsee: ''
 }, {
@@ -33,7 +33,7 @@ var destinations = [{
   long: -79.940918,
   city: false,
   population: 127999,
-  temperature: false,
+  temperature: '',
   vibes: 'southern hospitality, beachy, shopping',
   mustsee: 'The Battery, King Street, Sullivan\'s Island'
 }, {
@@ -42,7 +42,7 @@ var destinations = [{
   long: -90.071533,
   city: false,
   population: 378715,
-  temperature: true,
+  temperature: '',
   vibes: 'historic, music, artsy',
   mustsee: 'Bourbon Street, Garden District'
 }, {
@@ -51,7 +51,7 @@ var destinations = [{
   long: -81.088371,
   city: false,
   population: 142772,
-  temperature: false,
+  temperature: '',
   vibes: 'historic, scenic',
   mustsee: 'Riverside'
 }, {
@@ -60,12 +60,33 @@ var destinations = [{
   long: -73.935242,
   city: true,
   population: 8406000,
-  temperature: false,
+  temperature: '',
   vibes: 'big city, museums and art, nightlife',
   mustsee: 'The Met, SOHO, Central Park'
 }]
 
 var filteredLocations = destinations.slice();
+//AJAX IMMEDIATELY TO GET TEMPERATURES IN FILTEREDLOCATIONS OBJECT
+filteredLocations.forEach(function(item, index){
+
+  $.ajax({
+    type: "GET",
+    url: "https://api.forecast.io/forecast/7bb8bef0ae21f57ec6c74c26028fa176/" + item.lat + "," + item.long,
+    dataType: 'jsonp'
+  }).done(function(response){
+    averageTemp = [];
+    for (var i = 0; i < 7; i++) {
+      maxW = response.daily.data[i].temperatureMax;
+      minW = response.daily.data[i].temperatureMin;
+      avgW = (maxW + minW)/2
+      averageTemp.push(avgW);
+    };
+    //averaging upcoming week's weather based on daily high and low
+    item.temperature = Math.round((averageTemp.reduce(function(a, b){return a+b}, 0))/averageTemp.length);
+    console.log(index + ' temperature is ' + item.temperature);
+  });
+})
+
 var $map = $('#map').hide();
 var $filterDiv = $('#question-box').hide();
 
@@ -74,6 +95,11 @@ var filterIndex = 0;
 var filters = [
   {
     keyword: 'city',
+    filterFunction: function urbanFilter(keyword, bool) {
+      filteredLocations = filteredLocations.filter(function(element) {
+        return element[keyword] == bool;
+      })
+    },
     yes: 'http://media.giphy.com/media/tffaEs6otB1jW/giphy.gif',
     yesContent: 'Concrete Jungle',
     no: 'http://www.thatscoop.com/img/big/5706605d489e307042016185757.gif',
@@ -81,6 +107,17 @@ var filters = [
   },
   {
     keyword: 'temperature',
+    filterFunction: function heatFilter(keyword, bool) {
+      filteredLocations = filteredLocations.filter(function(element){
+          if ((bool == true) && (element.temperature >=80)) {
+            return true;
+          } else if ((bool == false) && (element.temperature < 80)){
+            return true;
+          } else {
+            return false;
+          }
+        });
+    },
     yes: 'http://static.asiawebdirect.com/m/phuket/portals/phuket-com/homepage/phuket-magazine/freedom-beach/pagePropertiesImage/freedom-beach.jpg',
     no: 'http://www.powerfmballarat.com.au/images/snow.jpg'
   }
@@ -96,7 +133,8 @@ function questionPrint() {
   var noImage = $('<img>').attr('src', filters[filterIndex].no);
   var keyword = filters[filterIndex].keyword;
   yesImage.click(function() {
-    filterLocation(keyword, true);
+    filters[filterIndex].filterFunction(keyword, true)
+    // filterLocation(keyword, true);
     if (filters[filterIndex + 1]) {
       filterIndex ++;
       $imgDiv.empty();
@@ -110,7 +148,8 @@ function questionPrint() {
   });
 
   noImage.click(function() {
-    filterLocation(keyword, false);
+    // filterLocation(keyword, false);
+    filters[filterIndex].filterFunction(keyword, false)
     if (filters[filterIndex + 1]) {
       filterIndex ++;
       $imgDiv.empty();
@@ -125,13 +164,6 @@ function questionPrint() {
 
   $yesDiv.append(yesImage);
   $noDiv.append(noImage);
-}
-//========FILTERING DESTINATIONS========
-
-function filterLocation(keyword, bool) {
-  filteredLocations = filteredLocations.filter(function(element) {
-    return element[keyword] == bool;
-  })
 }
 
 $('#readyBtn').on('click', function(event){
@@ -187,32 +219,3 @@ filteredLocations.forEach(function(item, index){
 }
 
 // google.maps.event.addDomListener(window, 'load', initialize);
-
-//=============ATTEMPTING AJAX WEATHER CALL =====================
-
-function weatherReports(filteredLocations) {
-  filteredLocations.forEach(function(item, index){
-
-    $.ajax({
-      type: "GET",
-      url: "https://api.forecast.io/forecast/7bb8bef0ae21f57ec6c74c26028fa176/" + item.lat + "," + item.long,
-      dataType: 'jsonp'
-    }).done(function(response){
-      // console.log(response);
-      averageTemp = [];
-      for (var i = 0; i < 7; i++) {
-        maxW = response.daily.data[i].temperatureMax;
-        minW = response.daily.data[i].temperatureMin;
-        avgW = (maxW + minW)/2
-        averageTemp.push(avgW);
-      }
-      // console.log(averageTemp);
-      //averaging upcoming week's weather based on daily high and low
-      var cityAvg = Math.round((averageTemp.reduce(function(a, b){return a+b}, 0))/averageTemp.length);
-      console.log(cityAvg);
-      item.temperature = cityAvg
-    });
-
-
-  })
-}
