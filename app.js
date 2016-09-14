@@ -117,8 +117,8 @@ var filters = [
           }
         });
     },
-    yes: 'http://static.asiawebdirect.com/m/phuket/portals/phuket-com/homepage/phuket-magazine/freedom-beach/pagePropertiesImage/freedom-beach.jpg',
-    no: 'http://www.powerfmballarat.com.au/images/snow.jpg'
+    yes: 'http://31.media.tumblr.com/tumblr_m6q9goPkiH1qdkb8yo1_250.gif',
+    no: 'http://25.media.tumblr.com/tumblr_mdj9q90lC91rb8q8vo1_500.gif'
   }
 ];
 
