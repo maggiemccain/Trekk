@@ -10,10 +10,14 @@ body {
 #question-box {
   width: 100%;
 }
-#question-box img {
+
+#question-box > * {
   display: inline-block;
-  width: 50%;
-  height:40%;
+}
+
+.imgDiv img {
+  width: 400px;
+  height: 400px;
 }
 
 #landingpage {

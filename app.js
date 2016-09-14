@@ -1,4 +1,5 @@
 console.log('is this working');
+
 var destinations = [{
   name: 'Nashville, TN',
   lat: 36.174465,
@@ -66,7 +67,7 @@ var destinations = [{
 
 var filteredLocations = destinations.slice();
 //TOOK OUT .hide() on map
-var $map = $('#map');
+var $map = $('#map').hide();
 var $filterDiv = $('#question-box').hide();
 
 var filterIndex = 0;
@@ -87,6 +88,9 @@ var filters = [
 
 function questionPrint() {
   var $questionBox = $('#question-box');
+  var $yesDiv = $('#yesDiv');
+  var $noDiv = $('#noDiv');
+  var $imgDiv = $('.imgDiv');
   var yesImage = $('<img>').attr('src', filters[filterIndex].yes);
   var noImage = $('<img>').attr('src', filters[filterIndex].no);
   var keyword = filters[filterIndex].keyword;
@@ -94,11 +98,12 @@ function questionPrint() {
     filterLocation(keyword, true);
     if (filters[filterIndex + 1]) {
       filterIndex ++;
-      $questionBox.empty();
+      $imgDiv.empty();
       questionPrint();
     } else {
       $filterDiv.hide();
-      $map.show()
+      $map.show();
+      initialize();
     }
     console.log(filteredLocations);
   });
@@ -107,19 +112,21 @@ function questionPrint() {
     filterLocation(keyword, false);
     if (filters[filterIndex + 1]) {
       filterIndex ++;
-      $questionBox.empty();
+      $imgDiv.empty();
       questionPrint();
     } else {
       $filterDiv.hide();
       $map.show();
+      initialize();
     }
     console.log(filteredLocations);
   });
 
-  $questionBox.append(yesImage);
-  $questionBox.append(noImage);
+  $yesDiv.append(yesImage);
+  $noDiv.append(noImage);
 }
-//FILTERING
+//========FILTERING DESTINATIONS========
+
 function filterLocation(keyword, bool) {
   filteredLocations = filteredLocations.filter(function(element) {
     return element[keyword] == bool;
@@ -131,3 +138,51 @@ $('#readyBtn').on('click', function(event){
   $filterDiv.show();
   questionPrint();
 })
+
+//========MAP INITIALIZATION========
+// In this example, we center the map, and add a marker, using a LatLng object
+// literal instead of a google.maps.LatLng object. LatLng object literals are
+// a convenient way to add a LatLng coordinate and, in most cases, can be used
+// in place of a google.maps.LatLng object.
+
+var map;
+function initialize() {
+  var mapOptions = {
+    zoom: 4,
+    center: {lat: 41.577212, lng: -92.711}
+  };
+  map = new google.maps.Map(document.getElementById('map'),
+      mapOptions);
+
+  var marker = new google.maps.Marker({
+    // The below line is equivalent to writing:
+    // position: new google.maps.LatLng(-34.397, 150.644)
+    //hardcode location OR position of user
+    position: {lat: 41.577212, lng: -92.711},
+    map: map
+  });
+
+//=======CREATE MULTIPLE MARKERS========
+filteredLocations.forEach(function(item, index){
+  var marker = new google.maps.Marker({
+    // The below line is equivalent to writing:
+    // position: new google.maps.LatLng(-34.397, 150.644)
+    position: {lat: item.lat, lng: item.long},
+    map: map
+  });
+})
+// You can use a LatLng literal in place of a google.maps.LatLng object when
+// creating the Marker object. Once the Marker object is instantiated, its
+// position will be available as a google.maps.LatLng object. In this case,
+// we retrieve the marker's position using the
+// google.maps.LatLng.getPosition() method.
+  var infowindow = new google.maps.InfoWindow({
+    content: '<p>Marker Location:' + marker.getPosition() + '</p>'
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+}
+
+// google.maps.event.addDomListener(window, 'load', initialize);
