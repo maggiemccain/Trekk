@@ -87,9 +87,8 @@ filteredLocations.forEach(function(item, index){
   });
 })
 
-var $map = $('#map').hide();
+var $map = $('#map');
 var $filterDiv = $('#question-box').hide();
-
 var filterIndex = 0;
 
 var filters = [
@@ -140,23 +139,22 @@ function questionPrint() {
       $imgDiv.empty();
       questionPrint();
     } else {
-      $filterDiv.hide();
-      $map.show();
+      $('.wrapper').hide();
+      $('.results').show();
       initialize();
     }
     console.log(filteredLocations);
   });
 
   noImage.click(function() {
-    // filterLocation(keyword, false);
     filters[filterIndex].filterFunction(keyword, false)
     if (filters[filterIndex + 1]) {
       filterIndex ++;
       $imgDiv.empty();
       questionPrint();
     } else {
-      $filterDiv.hide();
-      $map.show();
+      $('.wrapper').hide();
+      $('.results').show();
       initialize();
     }
     console.log(filteredLocations);
