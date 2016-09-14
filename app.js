@@ -6,7 +6,7 @@ var destinations = [{
   long: -86.767960,
   city: true,
   population: 678889,
-  temperature: true,
+  temperature: '',
   vibes: 'foodie, music, southern hospitality',
   mustsee: 'Tootsies, Country Music Hall of Fame, Printer\'s Alley',
 }, {
@@ -66,7 +66,6 @@ var destinations = [{
 }]
 
 var filteredLocations = destinations.slice();
-//TOOK OUT .hide() on map
 var $map = $('#map').hide();
 var $filterDiv = $('#question-box').hide();
 
@@ -76,7 +75,9 @@ var filters = [
   {
     keyword: 'city',
     yes: 'http://media.giphy.com/media/tffaEs6otB1jW/giphy.gif',
-    no: 'http://feelgrafix.com/data_images/out/5/779391-countryside.jpg'
+    yesContent: 'Concrete Jungle',
+    no: 'http://www.thatscoop.com/img/big/5706605d489e307042016185757.gif',
+    noContent: 'Nature'
   },
   {
     keyword: 'temperature',
@@ -186,3 +187,32 @@ filteredLocations.forEach(function(item, index){
 }
 
 // google.maps.event.addDomListener(window, 'load', initialize);
+
+//=============ATTEMPTING AJAX WEATHER CALL =====================
+
+function weatherReports(filteredLocations) {
+  filteredLocations.forEach(function(item, index){
+
+    $.ajax({
+      type: "GET",
+      url: "https://api.forecast.io/forecast/7bb8bef0ae21f57ec6c74c26028fa176/" + item.lat + "," + item.long,
+      dataType: 'jsonp'
+    }).done(function(response){
+      // console.log(response);
+      averageTemp = [];
+      for (var i = 0; i < 7; i++) {
+        maxW = response.daily.data[i].temperatureMax;
+        minW = response.daily.data[i].temperatureMin;
+        avgW = (maxW + minW)/2
+        averageTemp.push(avgW);
+      }
+      // console.log(averageTemp);
+      //averaging upcoming week's weather based on daily high and low
+      var cityAvg = Math.round((averageTemp.reduce(function(a, b){return a+b}, 0))/averageTemp.length);
+      console.log(cityAvg);
+      item.temperature = cityAvg
+    });
+
+
+  })
+}

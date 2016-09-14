@@ -1,5 +1,14 @@
+html {
+  height: 100%;
+  margin: 0;
+  /*padding: 0;*/
+}
+
 body {
   box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 #wrapper {
@@ -9,27 +18,90 @@ body {
 
 #question-box {
   width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-around;
+  /*align-content: stretch;*/
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-#question-box > * {
+.imgDiv {
   display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.imgDiv:hover {
+  -webkit-filter: grayscale(0) blur(0);
+filter: grayscale(0) blur(0);
+-webkit-transition: .3s ease-in-out;
+transition: .3s ease-in-out;
+-webkit-filter: grayscale(100%) blur(3px);
+filter: grayscale(100%) blur(3px);
+}
+
+h1 {
+  font-size: 2em;
 }
 
 .imgDiv img {
-  width: 400px;
+  width: 500px;
   height: 400px;
 }
 
-#landingpage {
+.wrapper {
   background-image: url('https://i.ytimg.com/vi/ezQMNn2dDtE/maxresdefault.jpg');
-  background-size: cover;
+  background-size:cover;
   background-repeat: no-repeat;
-  opacity: .8;
+  /*opacity: .8;*/
   width: 100%;
   height: 100vh;
+  font-family: 'Reenie Beanie', cursive;
+  /*padding-top: 100px;*/
 }
 
 #map {
   height: 50%;
   width: 60%;
 }
+
+#readyBtn {
+  width: 175px;
+  font-size: 1em;
+  line-height: 3em;
+  color: black;
+  background-color: white;
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  border-bottom: 2px solid grey;
+  border-radius: 10px;
+  transition: 0.5s;
+  margin-top: 30px;
+}
+
+#readyBtn:hover {
+  background-color: lightgrey;
+
+}
+
+.container {
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  padding: 40px;
+  color: white;
+  text-align: center;
+}
+
+/*landing page background options*/
+/*http://trevormorrowtravel.com/wp-content/uploads/2013/07/tumblr_mhma3czDzG1r124uio1_500.gif*/
+/*https://i.ytimg.com/vi/ezQMNn2dDtE/maxresdefault.jpg*/
+
+/*font-family: 'Neucha', cursive;*/
+/*font-family: 'Reenie Beanie', cursive;*/
