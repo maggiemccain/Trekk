@@ -14,10 +14,10 @@ var filters = [
     keyword: 'temperature',
     filterFunction: function heatFilter(keyword, bool) {
       filteredLocations = filteredLocations.filter(function(element){
-          if ((bool == true) && (element.temperature >=80)) {
-            return true;
-          } else if ((bool == false) && (element.temperature < 80)){
-            return true;
+          if (bool == true) {
+            return element.temperature >= 75;
+          } else if (bool == false) {
+            return element.temperature < 75
           } else {
             return false;
           }
@@ -128,5 +128,35 @@ var destinations = [{
   temperature: '',
   vibes: 'tropical, nightlife, Jimmy Buffet',
   mustsee: 'Southernmost Point, Duval Street, Latitude Key'
+}, {
+  name: 'Highlands, NC',
+  lat: 35.0526,
+  long: -83.1968,
+  city: false,
+  image: 'http://cache2.allpostersimages.com/p/MED/68/6841/HDJY100Z/plakaty/greetings-from-highlands-north-carolina.jpg',
+  forecast: '',
+  population: 927,
+  temperature: '',
+  vibes: 'southern hospitality, rustic, quaint',
+  mustsee: 'Old Edwards Inn'
+}, {
+  name: 'Venice, CA',
+  lat: 33.9850,
+  long: -118.4695,
+  city: false,
+  image: 'https://thumb1.shutterstock.com/display_pic_with_logo/137584/176341058/stock-vector-vintage-touristic-greeting-card-venice-beach-california-vector-eps-grunge-effects-can-be-176341058.jpg',
+  forecast: '',
+  population: 40000,
+  temperature: '',
+  vibes: 'beachy, funky, Cali',
+  mustsee: 'Boardwalk, Abbott Kinney Blvd, canals'
 }
 ]
+
+// if ((bool == true) && (element.temperature >=75)) {
+//   return true;
+// } else if ((bool == false) && (element.temperature < 75)){
+//   return true;
+// } else {
+//   return false;
+// }

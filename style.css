@@ -153,6 +153,11 @@ h1 {
   transition: 1s;
 }
 
+.title {
+  font-size: 5em;
+  margin: 1% auto;
+}
+
 .listingItem:hover h1 {
   font-size: 3em;
   color: #EB9FEF;
