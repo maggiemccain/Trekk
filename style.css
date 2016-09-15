@@ -9,6 +9,11 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Reenie Beanie', cursive;
+}
+
+h2 {
+  font-size: 2em;
 }
 
 #wrapper {
@@ -18,7 +23,6 @@ body {
 
 #question-box {
   width: 100%;
-  /*height: 100vh;*/
   display: flex;
   flex-direction: row;
   justify-content: center;;
@@ -29,6 +33,14 @@ body {
   /*background-color: rgba(0, 0, 0, 0.5);*/
 }
 
+/*.content > * {
+  display: inline-block;
+}*/
+
+/*h2 {
+  display: block;
+}*/
+
 .imgDiv {
   display: inline-block;
   margin: 0 auto;
@@ -36,7 +48,7 @@ body {
   position: relative;
 }
 
-.imgDiv:hover {
+.imgDiv:hover img {
   -webkit-filter: grayscale(0) blur(0);
 filter: grayscale(0) blur(0);
 -webkit-transition: .3s ease-in-out;
@@ -47,6 +59,8 @@ filter: grayscale(100%) blur(3px);
 
 h1 {
   font-size: 2em;
+  /*margin: 0;*/
+  padding: 1%;
 }
 
 .imgDiv img {
@@ -61,17 +75,28 @@ h1 {
   /*opacity: .8;*/
   width: 100%;
   height: 100%;
-  font-family: 'Reenie Beanie', cursive;
+  /*font-family: 'Reenie Beanie', cursive;*/
   padding-top: 100px;
 
 }
 
-#map {
+#map-wrapper {
   height: 100%;
   width: 60%;
   position: fixed;
   top: 0;
   left: 0;
+  margin: 0;
+}
+
+#map {
+  height: 100%;
+}
+
+.content {
+  float: right;
+  width: 40%;
+  margin: 0;
 }
 
 #readyBtn {
@@ -96,18 +121,33 @@ h1 {
 .results {
   width: 100%;
   height: 100%;
-  position: relative;
+  /*position: relative;*/
   display: none;
 }
 
 .container {
   width: 60%;
-  height: 60vh;
+  height: 60%;
   background-color: rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   padding: 40px;
   color: white;
   text-align: center;
+}
+
+.listingItem {
+  list-style-type: none;
+  background-color: #DAE0F2;
+  border-bottom: 2px solid black;
+}
+
+.listingItem h1 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 /*landing page background options*/

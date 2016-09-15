@@ -66,7 +66,7 @@ var destinations = [{
 }]
 
 var filteredLocations = destinations.slice();
-//AJAX IMMEDIATELY TO GET TEMPERATURES IN FILTEREDLOCATIONS OBJECT
+//call weather API as soon as page loads and save to each element in destination object
 filteredLocations.forEach(function(item, index){
 
   $.ajax({
@@ -99,10 +99,9 @@ var filters = [
         return element[keyword] == bool;
       })
     },
+    question: 'getting lost in the city or lost in nature?',
     yes: 'http://media.giphy.com/media/tffaEs6otB1jW/giphy.gif',
-    yesContent: 'Concrete Jungle',
-    no: 'http://www.thatscoop.com/img/big/5706605d489e307042016185757.gif',
-    noContent: 'Nature'
+    no: 'http://www.thatscoop.com/img/big/5706605d489e307042016185757.gif'
   },
   {
     keyword: 'temperature',
@@ -117,6 +116,7 @@ var filters = [
           }
         });
     },
+    question: 'heating up or cooling down',
     yes: 'http://31.media.tumblr.com/tumblr_m6q9goPkiH1qdkb8yo1_250.gif',
     no: 'http://25.media.tumblr.com/tumblr_mdj9q90lC91rb8q8vo1_500.gif'
   }
@@ -128,6 +128,8 @@ function questionPrint() {
   var $yesDiv = $('#yesDiv');
   var $noDiv = $('#noDiv');
   var $imgDiv = $('.imgDiv');
+  // var yesImage = $('#yesPic').attr('src', filters[filterIndex].yes);
+  // var noImage = $('#noPic').attr('src', filters[filterIndex].no);
   var yesImage = $('<img>').attr('src', filters[filterIndex].yes);
   var noImage = $('<img>').attr('src', filters[filterIndex].no);
   var keyword = filters[filterIndex].keyword;
@@ -136,12 +138,14 @@ function questionPrint() {
     // filterLocation(keyword, true);
     if (filters[filterIndex + 1]) {
       filterIndex ++;
+      $('h1').empty();
       $imgDiv.empty();
       questionPrint();
     } else {
       $('.wrapper').hide();
       $('.results').show();
       initialize();
+      createListings(filteredLocations);
     }
     console.log(filteredLocations);
   });
@@ -150,16 +154,19 @@ function questionPrint() {
     filters[filterIndex].filterFunction(keyword, false)
     if (filters[filterIndex + 1]) {
       filterIndex ++;
+      $('h1').empty();
       $imgDiv.empty();
       questionPrint();
     } else {
       $('.wrapper').hide();
       $('.results').show();
       initialize();
+      createListings(filteredLocations);
     }
     console.log(filteredLocations);
   });
 
+  $('h1').append(filters[filterIndex].question);
   $yesDiv.append(yesImage);
   $noDiv.append(noImage);
 }
@@ -217,3 +224,15 @@ filteredLocations.forEach(function(item, index){
 }
 
 // google.maps.event.addDomListener(window, 'load', initialize);
+
+//============= CREATE LISTINGS FOR RESULTS.CONTENT ===================
+function createListings (obj) {
+  obj.forEach(function(element){
+    var $listing = $('<li>').addClass('listingItem');
+    var $listingTitle = $('<h1>').text(element.name);
+    var $listingTags = $('<h2>').text(element.vibes);
+    var $listingMustsee = $('<h2>').text(element.mustsee);
+    $listing.append($listingTitle).append($listingTags).append($listingMustsee);
+    $('ul').append($listing);
+  })
+};
