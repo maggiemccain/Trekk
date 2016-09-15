@@ -19,3 +19,4 @@
 - Ideally this site answers the following scenario: I have $X to spend and want to leave XX/XX/XXXX, where should I go?
 - Need to add jQuery animation
 - Isn't yet responsive
+- User could potentially click through site before weather api call has loaded
