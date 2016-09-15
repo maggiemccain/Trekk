@@ -14,6 +14,8 @@
 ##Link to your wireframes – sketches of major views / interfaces in your application
 ##Link to your pitch deck – documentation of your wireframes, user stories, and proposed architecture
 ##Descriptions of any unsolved problems or major hurdles you had to overcome
+- Lack of free API that offers mapped flights.  Ideally this site answers the following scenario: I have $X to spend and want to leave XX/XX/XXXX, where should I go?  The site would then filter out popular destinations based on your preferences and show you differnet flight and driving options to get there within your price range on the specified date.  
 - Considering weather conditions beyond average temperatures in the weather related filter
-- Lack of free API that offers mapped flights.
 - Ideally this site answers the following scenario: I have $X to spend and want to leave XX/XX/XXXX, where should I go?
+- Need to add jQuery animation
+- Isn't yet responsive
