@@ -5,6 +5,8 @@ var destinations = [{
   lat: 36.174465,
   long: -86.767960,
   city: true,
+  image: 'https://www.cardcow.com/images/set83/card00146_fr.jpg',
+  forecast: '',
   population: 678889,
   temperature: '',
   vibes: 'foodie, music, southern hospitality',
@@ -14,6 +16,8 @@ var destinations = [{
   lat: 35.590489,
   long: -82.560352,
   city: false,
+  image: 'http://imgc.allpostersimages.com/images/P-473-488-90/29/2996/2VOQD00Z/posters/greetings-from-asheville-north-carolina.jpg',
+  forecast: '',
   population: 87236,
   temperature: '',
   vibes: 'scenic, hipster',
@@ -23,6 +27,8 @@ var destinations = [{
   lat: 30.2671500,
   long: -97.7430600,
   city: true,
+  image: 'http://www.outofboundscomedy.com/2013/wp-content/uploads/2012/07/Austin-TX-Card.jpg',
+  forecast: '',
   population: 885400,
   temperature: '',
   vibes: 'hipster, foodie, music',
@@ -32,6 +38,8 @@ var destinations = [{
   lat: 32.784618,
   long: -79.940918,
   city: false,
+  image: 'https://c2.staticflickr.com/8/7013/6636150275_82be38dfce_b.jpg',
+  forecast: '',
   population: 127999,
   temperature: '',
   vibes: 'southern hospitality, beachy, shopping',
@@ -41,6 +49,8 @@ var destinations = [{
   lat: 29.951065,
   long: -90.071533,
   city: false,
+  image: 'https://cdn.shopify.com/s/files/1/0157/3938/products/greetings-from-new-orleans1_1024x1024.jpg?v=1336168516',
+  forecast: '',
   population: 378715,
   temperature: '',
   vibes: 'historic, music, artsy',
@@ -50,6 +60,8 @@ var destinations = [{
   lat: 32.076176,
   long: -81.088371,
   city: false,
+  image: 'https://c2.staticflickr.com/4/3308/3557450988_67969f95ef_b.jpg',
+  forecast: '',
   population: 142772,
   temperature: '',
   vibes: 'historic, scenic',
@@ -59,6 +71,8 @@ var destinations = [{
   lat: 40.730610,
   long: -73.935242,
   city: true,
+  image: 'https://s-media-cache-ak0.pinimg.com/564x/18/e4/49/18e449f3804346ba07f8878d32332dcf.jpg',
+  forecast: '',
   population: 8406000,
   temperature: '',
   vibes: 'big city, museums and art, nightlife',
@@ -80,8 +94,10 @@ filteredLocations.forEach(function(item, index){
       minW = response.daily.data[i].temperatureMin;
       avgW = (maxW + minW)/2
       averageTemp.push(avgW);
+      // console.log(response.daily.summary);
     };
     //averaging upcoming week's weather based on daily high and low
+    item.forecast = response.daily.summary;
     item.temperature = Math.round((averageTemp.reduce(function(a, b){return a+b}, 0))/averageTemp.length);
     console.log(index + ' temperature is ' + item.temperature);
   });
@@ -135,7 +151,6 @@ function questionPrint() {
   var keyword = filters[filterIndex].keyword;
   yesImage.click(function() {
     filters[filterIndex].filterFunction(keyword, true)
-    // filterLocation(keyword, true);
     if (filters[filterIndex + 1]) {
       filterIndex ++;
       $('h1').empty();
@@ -187,27 +202,74 @@ var map;
 function initialize() {
   var mapOptions = {
     zoom: 4,
-    center: {lat: 41.577212, lng: -92.711}
+    center: {lat: 41.577212, lng: -92.711},
+    styles: [
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      { "invert_lightness": true },
+      { "color": "#8de0ed" }
+    ]
+  },{
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#828691" }
+    ]
+  },{
+    "elementType": "labels.text",
+    "stylers": [
+      { "color": "#ffffff" },
+      { "weight": 0.1 }
+    ]
+  },{
+  }
+]
   };
   map = new google.maps.Map(document.getElementById('map'),
       mapOptions);
 
+  var image = 'http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png';
   var marker = new google.maps.Marker({
     // The below line is equivalent to writing:
     // position: new google.maps.LatLng(-34.397, 150.644)
     //hardcode location OR position of user
     position: {lat: 41.577212, lng: -92.711},
-    map: map
+    map: map,
+    icon: image
   });
+
+
+  // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+  //       var beachMarker = new google.maps.Marker({
+  //         position: {lat: -33.890, lng: 151.274},
+  //         map: map,
+  //         icon: image
+  //       });
 
 //=======CREATE MULTIPLE MARKERS========
 filteredLocations.forEach(function(item, index){
+
+  var image = 'http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png';
   var marker = new google.maps.Marker({
     // The below line is equivalent to writing:
     // position: new google.maps.LatLng(-34.397, 150.644)
     position: {lat: item.lat, lng: item.long},
-    map: map
+    animation: google.maps.Animation.DROP,
+    map: map,
+    icon: image
   });
+
+  var infowindow = new google.maps.InfoWindow({
+    content: '<img class="markerImg" src=' + item.image + '>'
+    // content: '<img class="markerImg" src=' + item.image + '>' + '<h3>' + item.name + '</h3>'
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
 })
 // You can use a LatLng literal in place of a google.maps.LatLng object when
 // creating the Marker object. Once the Marker object is instantiated, its
@@ -215,7 +277,7 @@ filteredLocations.forEach(function(item, index){
 // we retrieve the marker's position using the
 // google.maps.LatLng.getPosition() method.
   var infowindow = new google.maps.InfoWindow({
-    content: '<p>Marker Location:' + marker.getPosition() + '</p>'
+    content: '<p>You are here!</p>'
   });
 
   google.maps.event.addListener(marker, 'click', function() {
@@ -229,10 +291,11 @@ filteredLocations.forEach(function(item, index){
 function createListings (obj) {
   obj.forEach(function(element){
     var $listing = $('<li>').addClass('listingItem');
-    var $listingTitle = $('<h1>').text(element.name);
-    var $listingTags = $('<h2>').text(element.vibes);
-    var $listingMustsee = $('<h2>').text(element.mustsee);
-    $listing.append($listingTitle).append($listingTags).append($listingMustsee);
+    var $listingTitle = $('<h1>').text(element.name).append($('<hr>'));
+    var $forecast = $('<h3>').html('<span>Forecast: </span>' + element.forecast);
+    var $listingTags = $('<h2>').text('Vibes: ' + element.vibes);
+    var $listingMustsee = $('<h2>').text('Don\'t Miss: ' + element.mustsee);
+    $listing.append($listingTitle).append($forecast).append($listingTags).append($listingMustsee);
     $('ul').append($listing);
   })
 };
