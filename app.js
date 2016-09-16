@@ -1,7 +1,7 @@
 var filteredLocations = destinations.slice();
 
 //=====================CALLS WEATHER API ============================
-
+$(document).ready(
 filteredLocations.forEach(function(item, index){
 
   $.ajax({
@@ -22,6 +22,7 @@ filteredLocations.forEach(function(item, index){
     console.log(index + ' temperature is ' + item.temperature);
   });
 })
+);
 
 var $map = $('#map');
 var $filterDiv = $('#question-box').hide();

@@ -101,11 +101,12 @@ h1 {
 }
 
 #readyBtn {
-  width: 175px;
-  font-size: 1em;
-  line-height: 3em;
-  color: black;
-  background-color: white;
+  width: 150px;
+  font-size: 3em;
+  font-family: 'Reenie Beanie', cursive;
+  line-height: 2em;
+  color: white;
+  background-color: rgba(130, 134, 145, .4);
   border-left: 0px;
   border-right: 0px;
   border-top: 0px;
@@ -116,7 +117,7 @@ h1 {
 }
 
 #readyBtn:hover {
-  background-color: lightgrey;
+  background-color: rgba(130, 134, 145, 1);
 }
 
 .results {
@@ -153,9 +154,8 @@ h1 {
   transition: 1s;
 }
 
-.title {
-  font-size: 5em;
-  margin: 1% auto;
+.logo {
+  width: 20%;
 }
 
 .listingItem:hover h1 {
