@@ -181,3 +181,19 @@ function createListings (obj) {
     $('ul').append($listing);
   })
 };
+
+//========================= ROME 2 RIO ================================
+
+$.ajax({
+  type: "GET",
+  url: "http://free.rome2rio.com/api/1.4/json/Search?key=wndDjYir&oName=Nashville&dName=Asheville&noStop=true",
+  // dataType: 'jsonp'
+}).done(function(response){
+  console.log(response.places[0].shortName);
+  console.log(response.places[1].shortName);
+  // console.log(response.routes);
+  var options = response.routes;
+  options.forEach(function(route){
+    console.log(route.name + ' for ' + route.indicativePrices[0].price);
+  })
+});
